@@ -20,7 +20,7 @@ class ByteBank extends StatelessWidget {
             textTheme: ButtonTextTheme.primary,
           ),
           appBarTheme: AppBarTheme(color: Colors.green[900])),
-      home: Dashboard(), //ContactForm(), //Dashboard(), //ContactList(),
+      home: Dashboard(), //ContactForm(), //Dashboard(),
     );
   }
 }
