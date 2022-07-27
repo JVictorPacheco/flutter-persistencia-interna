@@ -1,18 +1,26 @@
 import 'package:bytebank/database/app_database.dart';
+import 'package:bytebank/database/dao/contact_dao.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:bytebank/screens/contact_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class ContactList extends StatelessWidget {
+class ContactList extends StatefulWidget {
+  @override
+  State<ContactList> createState() => _ContactListState();
+}
+
+class _ContactListState extends State<ContactList> {
+  final ContactDao _dao = ContactDao();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(centerTitle: true, title: Text('Contacts')),
       body: FutureBuilder<List<Contact>>(
         initialData: const [],
-        future: Future.delayed(Duration(seconds: 1)).then((value) => findAll()),
+        future: _dao.findAll(),
         builder: ((context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
@@ -50,10 +58,13 @@ class ContactList extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context)
-              .push((MaterialPageRoute(builder: ((context) => ContactForm()))))
-              .then((newContact) => debugPrint(newContact.toString()));
+              .push(
+                MaterialPageRoute(builder: (context) => ContactForm()),
+              )
+              .then((value) => setState(() {}));
         },
-        child: Icon(Icons.add),
+        backgroundColor: Theme.of(context).primaryColor,
+        child: const Icon(Icons.add),
       ),
     );
   }
